@@ -4,15 +4,16 @@ import java.io.IOException;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
-import java.util.Scanner;
+import java.awt.FileDialog;
+import javax.swing.JFrame;
 
-public class Test {
+public class imageGen {
    public static void main(String args[])throws IOException {
-      Scanner s = new Scanner(System.in);
-      System.out.println("Paste file path: ");
-      String name = s.next();
+	  FileDialog fd = new FileDialog(new JFrame());
+	  fd.setVisible(true);
+	  File[] f = fd.getFiles()
       
-      File file= new File(name);
+      File file= new File(fd.getFiles()[0].getAbsolutePath());
       FileWriter w = new FileWriter("C:\\new.txt");
       BufferedImage img = ImageIO.read(file);
       
@@ -25,12 +26,18 @@ public class Test {
             int green = color.getGreen();
             int blue = color.getBlue();
             
-            if (red > green && red > blue) {
+            if(green - red > green) {
+            	w.write("E ");
+            } else if(blue - green > red) {
+            	w.write("G ");
+            } else if(red - green > blue) {
+            	w.write("K ");
+            } else if (red > green && red > blue) {
             	w.write("# ");
             } else if (green > red && green > blue) {
-            	w.write("* ");
+            	w.write("H ");
             } else {
-            	w.write("= ");
+            	w.write("- ");
             }
             
          }
